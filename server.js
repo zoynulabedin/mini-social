@@ -1,12 +1,15 @@
 /**
  * express server
  */
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import express from "express";
 import expressEjsLayouts from "express-ejs-layouts";
-import {mongoDBConnection}  from "./config/db.js";
-import colors from "colors";
+import session from "express-session";
+import { mongoDBConnection } from "./config/db.js";
+import { localsMiddleware } from "./middlewares/localsMiddleware.js";
 import userRoute from "./routes/userRoute.js";
+import color from "colors"
 
 /**
  * Load environment variables from .env file
@@ -33,7 +36,15 @@ app.use(express.static("public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(
+	session({
+		secret: process.env.JWT_SECRET,
+		resave: true,
+		saveUninitialized: true,
+	})
+);
+app.use(localsMiddleware);
+app.use(cookieParser());
 /**
  * ejs view engine
  */

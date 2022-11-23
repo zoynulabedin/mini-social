@@ -1,9 +1,33 @@
 import { Router } from "express";
-import { loginController } from "../controllers/userController.js";
-
+import {
+	changePasswordController,
+	findFriendsController,
+	galleryController,
+	loggoutController,
+	loginController,
+	loginControllerauth,
+	profileController,
+	profilePhotoController,
+	registerController,
+	registerControllerPost,
+} from "../controllers/userController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
+import authRedirect from "../middlewares/authredirect.js";
 
 const router = Router();
-
-router.route("/").get(loginController);
+router.route("/").get(authRedirect,profileController);
+router
+	.route("/login")
+	.get(authMiddleware, loginController)
+	.post( loginControllerauth);
+router.route("/loggout").get(loggoutController);
+router
+	.route("/register")
+	.get(authMiddleware,registerController)
+	.post(registerControllerPost);
+router.route("/profile-photo").get(profilePhotoController);
+router.route("/change-password").get(changePasswordController);
+router.route("/find-friends").get(findFriendsController);
+router.route("/gallery").get(galleryController);
 
 export default router;
