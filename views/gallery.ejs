@@ -8,35 +8,24 @@
 		<div class="profile-box">
 			<div class="box-content">
 				<h3>Gallery Photo</h3>
+				<% if (message) { %>
+				<p><%= message %></p>
+				<% } %>
 			</div>
 			<div class="gall-update">
-				<div class="gallery-wrapper">
-					<div class="profile-img">
-						<img
-							src="https://www.finetoshine.com/wp-content/uploads/2020/04/Beautiful-Girl-Wallpapers-New-Photos-Images-Pictures.jpg"
-							style="height: 100px"
-						/>
+				<h2>Gallery</h2>
+				<div class="gall-wrapper">
+					<!-- single item -->
+					<% user.gallery.forEach(element => { %>
+					<div class="single-item">
+						<img src="./gallery/<%= element %> " alt="" />
 					</div>
-					<div class="profile-img">
-						<img
-							src="https://www.finetoshine.com/wp-content/uploads/2020/04/Beautiful-Girl-Wallpapers-New-Photos-Images-Pictures.jpg"
-							style="height: 100px"
-						/>
-					</div>
-					<div class="profile-img">
-						<img
-							src="https://www.finetoshine.com/wp-content/uploads/2020/04/Beautiful-Girl-Wallpapers-New-Photos-Images-Pictures.jpg"
-							style="height: 100px"
-						/>
-					</div>
-					<div class="profile-img">
-						<img
-							src="https://www.finetoshine.com/wp-content/uploads/2020/04/Beautiful-Girl-Wallpapers-New-Photos-Images-Pictures.jpg"
-							style="height: 100px"
-						/>
-					</div>
+					<% }) %>
+
+					<!-- end single item -->
 				</div>
-				<form action="/gallery" method="POST" enctype="multipart/form-data">
+				<div class="gallery-wrapper"></div>
+				<form action="/gall" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="gallery"
 							><img id="label_img" src="../images/image-gallery.png" alt=""

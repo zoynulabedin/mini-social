@@ -5,7 +5,6 @@ const __dirname = path.resolve();
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		console.log(req.files);
 		if (req.files.profile_photo) {
 			if (
 				file.mimetype === "image/jpeg" ||
@@ -21,17 +20,34 @@ const storage = multer.diskStorage({
 					"/profile-photo"
 				);
 			}
+		} else if (req.files.gallery) {
+			if (
+				file.mimetype === "image/jpeg" ||
+				file.mimetype === "image/png" ||
+				file.mimetype === "image/jpg"
+			) {
+				cb(null, path.join(__dirname, "public/gallery"));
+			} else {
+				validateMessage(
+					req,
+					res,
+					"Only jpeg, jpg and png files are allowed",
+					"/gallery"
+				);
+			}
 		}
 	},
 	filename: (req, file, cb) => {
-		cb(null, file.originalname);
+		cb(null, Date.now() + "_" + file.originalname);
 	},
 });
 
 const upload = multer({
 	storage: storage,
-}).fields([
-	{ name: "profile_photo", maxCount: 1 }
-]);
+}).fields([{ name: "profile_photo", maxCount: 1 }]);
 
-export default upload;
+const gallery = multer({
+	storage: storage,
+}).fields([{ name: "gallery", maxCount: 15 }]);
+
+export { upload, gallery };

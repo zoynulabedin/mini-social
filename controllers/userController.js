@@ -63,8 +63,36 @@ const findFriendsController = (req, res) => {
  * @gallery page
  */
 
-const galleryController = (req, res) => {
-	res.render("gallery");
+const galleryController = async (req, res) => {
+	
+		res.render("gallery",{
+			user: req.session.user
+		});
+
+	
+	
+};
+
+/**
+ * @post Router
+ * galleryControllerPost
+ */
+
+const galleryControllerPost = async (req, res) => {
+	try {
+		for (let i = 0; i < req.files.gallery.length; i++) {
+			console.log(req.files[i]);
+			const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
+				$push: {
+					gallery: req.files.gallery[i].originalname,
+				},
+			});
+			// session update
+			req.session.user = user;
+		}
+
+		validateMessage(req, res, "Gallery updated successfully", "/gall");
+	} catch (error) {}
 };
 
 /**
@@ -219,20 +247,20 @@ const passwordChangController = async (req, res) => {
 		const { oldpass, newpass, conpass } = req.body;
 		const passmatch = bcrypt.compareSync(oldpass, req.session.user.password);
 		// validate
-		if(!oldpass){
+		if (!oldpass) {
 			validateMessage(
 				req,
 				res,
 				"Please enter your old password",
 				"/change-password"
 			);
-		}else if(!passmatch){
+		} else if (!passmatch) {
 			validateMessage(
-                req,
-                res,
-                "Please enter your new password",
-                "/change-password"
-            );
+				req,
+				res,
+				"Please enter your new password",
+				"/change-password"
+			);
 		}
 
 		// compare old to new password
@@ -241,11 +269,15 @@ const passwordChangController = async (req, res) => {
 		}
 		// update user
 		const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
-			password: makeHash(newpass)
+			password: makeHash(newpass),
 		});
-        req.session.user.password = user;
-		validateMessage(req, res, "Password changed successfully", "/change-password");
-
+		req.session.user.password = user;
+		validateMessage(
+			req,
+			res,
+			"Password changed successfully",
+			"/change-password"
+		);
 	} catch (error) {
 		validateMessage(req, res, error.message, "/password-change");
 	}
@@ -265,4 +297,5 @@ export {
 	userAccountactivation,
 	profilePhotoUploadController,
 	passwordChangController,
+	galleryControllerPost,
 };

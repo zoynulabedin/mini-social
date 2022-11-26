@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema({
 	username: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	password: {
 		type: String,
@@ -30,10 +31,13 @@ const UserSchema = new mongoose.Schema({
 		type: Array,
 	},
 	followers: {
-		type: Array,
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: "User",
+        
 	},
 	following: {
-		type: Array,
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: "User",
 	},
 	location: {
 		type: String,

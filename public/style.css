@@ -309,3 +309,15 @@ input#gallery {
 	width: 150px;
 	cursor: pointer;
 }
+
+.single-item img {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+}
+.follow-wrapper a {
+	text-transform: capitalize;
+	text-decoration: none;
+	font-size: 12px;
+	color: #dc4e41;
+}

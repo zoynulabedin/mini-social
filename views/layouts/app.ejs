@@ -27,13 +27,24 @@
 			}
 
 			const gallery = document.getElementById("gallery");
+			const gallWrapper = document.querySelector(".gallery-wrapper");
+			const label_img = document.getElementById("label_img");
 			if (gallery) {
 				gallery.addEventListener("change", (e) => {
 					const files = e.target.files;
-					let imgs = "";
-					files.forEach((file) => {
-						console.log(file.name);
-					});
+					let image = "";
+					for (let i = 0; i < files.length; i++) {
+						const url = URL.createObjectURL(files[i]);
+						image += `<div class="profile-img">
+						<img
+							src="${url}"
+							style="height: 100px"
+						/>
+					</div>`;
+					}
+					gallWrapper.innerHTML = image;
+					gallWrapper.style.display = "flex";
+					label_img.style.display = "none";
 				});
 			}
 		</script>
