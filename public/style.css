@@ -255,7 +255,7 @@ a:hover {
 	width: 300px;
 	height: 300px;
 	object-fit: cover;
-	border-radius: 15px;
+	border-radius: 50%;
 }
 
 .profile-photo h2 {
@@ -292,4 +292,20 @@ a:hover {
 	gap: 30px;
 	justify-content: space-between;
 	justify-content: center;
+}
+
+input#gallery {
+	display: none;
+}
+.gallery-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 13px;
+}
+.gallery-wrapper {
+	display: none;
+}
+#label_img {
+	width: 150px;
+	cursor: pointer;
 }

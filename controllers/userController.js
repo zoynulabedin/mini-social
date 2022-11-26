@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import userSchema from "../models/User.js";
 import makeHash from "../utility/hash.js";
 import CreateToken from "../utility/jwt.js";
@@ -130,12 +131,16 @@ const loginControllerauth = async (req, res) => {
 			} else if (!passwordMatch) {
 				validateMessage(req, res, "Password is incorrect !", "/login");
 			} else {
-				const token = CreateToken(isexistEmail._id, "3d");
-				// create token
-				res.cookie("authToken", token);
-				// create session
-				req.session.user = isexistEmail;
-				validateMessage(req, res, "Login successfully", "/");
+				if (!isexistEmail.isActive) {
+					validateMessage(req, res, " Please active your account", "/login");
+				} else {
+					const token = CreateToken(isexistEmail._id, "3d");
+					// create token
+					res.cookie("authToken", token);
+					// create session
+					req.session.user = isexistEmail;
+					validateMessage(req, res, "Login successfully", "/");
+				}
 			}
 		}
 	} catch (error) {
@@ -153,6 +158,99 @@ const loggoutController = (req, res) => {
 	validateMessage(req, res, "You have been loggout ", "/login");
 };
 
+/**
+ * user account activation
+ */
+
+const userAccountactivation = (req, res) => {
+	try {
+		const { token } = req.params;
+		const jwtVerifyToken = jwt.verify(token, process.env.JWT_SECRET);
+		if (jwtVerifyToken) {
+			userSchema.findOneAndUpdate(
+				{ _id: jwtVerifyToken.id },
+				{ isActive: true },
+				(err, data) => {
+					if (err) {
+						validateMessage(req, res, err.message, "/login");
+					} else {
+						validateMessage(
+							req,
+							res,
+							"Account activated successfully",
+							"/login"
+						);
+					}
+				}
+			);
+		}
+	} catch (error) {
+		validateMessage(req, res, error.message, "/login");
+	}
+};
+
+/**
+ * profile photo upload controller
+ */
+
+const profilePhotoUploadController = async (req, res) => {
+	try {
+		const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
+			photo: req.files.profile_photo[0].originalname,
+		});
+		// session update
+		req.session.user = user;
+		validateMessage(req, res, "Photo uploaded successfully", "/profile-photo");
+	} catch (error) {
+		validateMessage(req, res, error.message, "/profile-photo");
+	}
+};
+
+/**
+ * profile bg photo upload controller
+ */
+
+/**
+ * password change controller
+ */
+
+const passwordChangController = async (req, res) => {
+	try {
+		const { oldpass, newpass, conpass } = req.body;
+		const passmatch = bcrypt.compareSync(oldpass, req.session.user.password);
+		// validate
+		if(!oldpass){
+			validateMessage(
+				req,
+				res,
+				"Please enter your old password",
+				"/change-password"
+			);
+		}else if(!passmatch){
+			validateMessage(
+                req,
+                res,
+                "Please enter your new password",
+                "/change-password"
+            );
+		}
+
+		// compare old to new password
+		if (newpass != conpass) {
+			validateMessage(req, res, "Passwords do not match", "/change-password");
+		}
+		// update user
+		const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
+			password: makeHash(newpass)
+		});
+        req.session.user.password = user;
+		validateMessage(req, res, "Password changed successfully", "/change-password");
+
+	} catch (error) {
+		validateMessage(req, res, error.message, "/password-change");
+	}
+};
+
 export {
 	loginController,
 	registerController,
@@ -164,4 +262,7 @@ export {
 	registerControllerPost,
 	loginControllerauth,
 	loggoutController,
+	userAccountactivation,
+	profilePhotoUploadController,
+	passwordChangController,
 };

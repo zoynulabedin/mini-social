@@ -66,3 +66,4 @@ app.listen(PORT, () => {
 	mongoDBConnection();
 	console.log(`Server running on port ${PORT}`.bgGreen.black.bold);
 });
+

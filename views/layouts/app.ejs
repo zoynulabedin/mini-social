@@ -13,5 +13,29 @@
 	</head>
 	<body>
 		<%- body %>
+
+		<script>
+			const profile_photo = document.getElementById("profile_photo");
+			const img_preview = document.getElementById("img_preview");
+			const proff = document.getElementById("proff");
+			if (profile_photo) {
+				profile_photo.addEventListener("change", (e) => {
+					const file = e.target.files[0];
+					img_preview.src = URL.createObjectURL(file);
+					proff.src = URL.createObjectURL(file);
+				});
+			}
+
+			const gallery = document.getElementById("gallery");
+			if (gallery) {
+				gallery.addEventListener("change", (e) => {
+					const files = e.target.files;
+					let imgs = "";
+					files.forEach((file) => {
+						console.log(file.name);
+					});
+				});
+			}
+		</script>
 	</body>
 </html>
