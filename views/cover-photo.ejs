@@ -1,0 +1,49 @@
+<div class="profile-body">
+	<div class="profile-wraper">
+		<div class="profile-info">
+			<div class="user info"><%- include ("layouts/profile.ejs") %></div>
+			<hr />
+			<div class="user-menu"><%- include ("layouts/menu.ejs") %></div>
+		</div>
+		<div class="profile-box">
+			<div class="box-content">
+				<h2>Change cover photo</h2>
+				<% if (message) { %>
+				<p><%= message %></p>
+				<% } %>
+				<hr />
+				<div class="form-wraper">
+					<form
+						action="/cover-photo"
+						method="POST"
+						enctype="multipart/form-data"
+					>
+						<div class="form-group photo-wrapper">
+							<label for="">Select a Photo</label>
+							<div class="profile-photo profile-cover">
+								<img
+									id="cover_preview"
+									src="./cover/<%= user.bgPhoto %> "
+									alt=""
+								/>
+							</div>
+							<label class="upload">
+								<i class="fa fa-camera uplaod"></i>
+								<input
+									multiple
+									id="profile_cover"
+									name="profile_cover"
+									style="display: none"
+									type="file"
+								/>
+							</label>
+						</div>
+						<div class="form-group">
+							<button type="submit">Update Cover Photo</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

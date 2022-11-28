@@ -15,6 +15,9 @@
 		<%- body %>
 
 		<script>
+			/**
+			 * profile photo preview
+			 */
 			const profile_photo = document.getElementById("profile_photo");
 			const img_preview = document.getElementById("img_preview");
 			const proff = document.getElementById("proff");
@@ -25,6 +28,22 @@
 					proff.src = URL.createObjectURL(file);
 				});
 			}
+
+			/**
+			 * cover photo preview
+			 */
+			const profile_cover = document.getElementById("profile_cover");
+			const cover_preview = document.getElementById("cover_preview");
+			if (profile_cover) {
+				profile_cover.addEventListener("change", (e) => {
+					const file = e.target.files[0];
+					cover_preview.src = URL.createObjectURL(file);
+				});
+			}
+
+			/*
+			 * gallery photo preview
+			 */
 
 			const gallery = document.getElementById("gallery");
 			const gallWrapper = document.querySelector(".gallery-wrapper");

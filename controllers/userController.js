@@ -54,8 +54,29 @@ const changePasswordController = (req, res) => {
  * @find friends
  */
 
-const findFriendsController = (req, res) => {
-	res.render("friends");
+const findFriendsController = async (req, res) => {
+	try {
+		const users = await userSchema.find();
+		res.render("friends", {
+			users,
+		});
+	} catch (error) {
+		validateMessage(req, res, error.message, "/find-friends");
+	}
+};
+
+/**
+ * @get @username  single friends controller
+ */
+const singlefriendController = async (req, res) => {
+	try {
+		const user = await userSchema.findOne({ username: req.params.username });
+		res.render("single-profile", {
+			user,
+		});
+	} catch (error) {
+		validateMessage(req, res, error.message, "/find-friends");
+	}
 };
 
 /**
@@ -64,13 +85,9 @@ const findFriendsController = (req, res) => {
  */
 
 const galleryController = async (req, res) => {
-	
-		res.render("gallery",{
-			user: req.session.user
-		});
-
-	
-	
+	res.render("gallery", {
+		user: req.session.user,
+	});
 };
 
 /**
@@ -84,7 +101,7 @@ const galleryControllerPost = async (req, res) => {
 			console.log(req.files[i]);
 			const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
 				$push: {
-					gallery: req.files.gallery[i].originalname,
+					gallery: req.files.gallery[i].filename,
 				},
 			});
 			// session update
@@ -224,7 +241,7 @@ const userAccountactivation = (req, res) => {
 const profilePhotoUploadController = async (req, res) => {
 	try {
 		const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
-			photo: req.files.profile_photo[0].originalname,
+			photo: req.files.profile_photo[0].filename,
 		});
 		// session update
 		req.session.user = user;
@@ -283,6 +300,69 @@ const passwordChangController = async (req, res) => {
 	}
 };
 
+/**
+ * @get profile bg photo upload controller
+ */
+
+const profileBgPhotoUploadController = async (req, res) => {
+	res.render("cover-photo");
+};
+
+/**
+ * @post profile bg photo upload controller
+ */
+
+const profileBgPhotoUploadControllerPost = async (req, res) => {
+	try {
+		console.log(req.files.profile_cover);
+		const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
+			bgPhoto: req.files.profile_cover[0].filename,
+		});
+		// session update
+		req.session.user = user;
+		validateMessage(req, res, "Photo uploaded successfully", "/cover-photo");
+	} catch (error) {
+		validateMessage(req, res, error.message, "/cover-photo");
+	}
+};
+
+/**
+ * @get edit profile controller
+ */
+
+const editProfileController = async (req, res) => {
+	try {
+		const user = await userSchema.findById(req.session.user._id);
+		res.render("edit-profile", {
+			user,
+		});
+	} catch (error) {
+		validateMessage(req, res, error.message, "/edit-profile");
+	}
+};
+
+/**
+ * @post edit profile controller
+ */
+
+const editProfileControllerPost = async (req, res) => {
+	try {
+		const { name, email, username } = req.body;
+		const user = await userSchema.findByIdAndUpdate(req.session.user._id, {
+			name,
+			email,
+			username,
+		});
+		/**
+		 * session update
+		 */
+		req.session.user = user;
+		validateMessage(req, res, "Profile updated successfully", "/edit-profile");
+	} catch (error) {
+		validateMessage(req, res, error.message, "/edit-profile");
+	}
+};
+
 export {
 	loginController,
 	registerController,
@@ -298,4 +378,9 @@ export {
 	profilePhotoUploadController,
 	passwordChangController,
 	galleryControllerPost,
+	profileBgPhotoUploadController,
+	profileBgPhotoUploadControllerPost,
+	editProfileController,
+	editProfileControllerPost,
+	singlefriendController,
 };

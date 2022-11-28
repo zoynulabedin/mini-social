@@ -10,95 +10,18 @@
 				<h2>Friends List</h2>
 				<div class="friends-wrapper">
 					<!-- single item -->
+					<% users.forEach(element => { %>
 					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
+						<a href="/<%= element.username %>"
+							><img src="./images/<%= element.photo %>" alt=""
 						/></a>
 						<div class="friend-info">
-							<h3>John Doe</h3>
+							<h3><%= element.name %></h3>
 							<a class="follow" href="">Follow</a>
 						</div>
 					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
+					<% }) %>
+
 					<!-- end single item -->
 				</div>
 			</div>

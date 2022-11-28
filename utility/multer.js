@@ -35,6 +35,21 @@ const storage = multer.diskStorage({
 					"/gallery"
 				);
 			}
+		} else if (req.files.profile_cover) {
+			if (
+				file.mimetype === "image/jpeg" ||
+				file.mimetype === "image/png" ||
+				file.mimetype === "image/jpg"
+			) {
+				cb(null, path.join(__dirname, "public/cover"));
+			} else {
+				validateMessage(
+					req,
+					res,
+					"Only jpeg, jpg and png files are allowed",
+					"/cover-photo"
+				);
+			}
 		}
 	},
 	filename: (req, file, cb) => {
@@ -42,12 +57,20 @@ const storage = multer.diskStorage({
 	},
 });
 
+// profile pic
 const upload = multer({
 	storage: storage,
 }).fields([{ name: "profile_photo", maxCount: 1 }]);
 
+// gallery
 const gallery = multer({
 	storage: storage,
 }).fields([{ name: "gallery", maxCount: 15 }]);
 
-export { upload, gallery };
+// cover photo
+
+const cover = multer({
+	storage: storage,
+}).fields([{ name: "profile_cover", maxCount: 1 }]);
+
+export { upload, gallery, cover };

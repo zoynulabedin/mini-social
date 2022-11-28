@@ -6,102 +6,31 @@
 			<div class="user-menu"><%- include ("layouts/menu.ejs") %></div>
 		</div>
 		<div class="profile-box">
-			<div class="profile-details" style="background-image: url()">
-				<h3>People You May Know</h3>
-				<hr />
-				<div class="friends-wrapper">
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
+			<div
+				class="profile-details"
+				style="background-image: url(./cover/<%= user.bgPhoto %>)"
+			>
+				<div class="profile-img">
+					<img src="./images/<%= user.photo %>" alt="" />
+					<div class="profile-info-text">
+						<h3><%= user.name %></h3>
+						<h4>@<%= user.username %></h4>
+						<a href="">2k Followers</a>
+						<a href="">1k Following</a>
 					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
-					<!-- single item -->
-					<div class="friend-item">
-						<a href=""
-							><img
-								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjNuJn1DSPvamzZpsssUXF9OmC4m9T1g_3xtsMWcbD&s"
-								alt=""
-						/></a>
-						<div class="friend-info">
-							<h3>John Doe</h3>
-							<a class="follow" href="">Follow</a>
-						</div>
-					</div>
-					<!-- end single item -->
 				</div>
+			</div>
+
+			<h2>Gallery</h2>
+			<div class="gall-wrapper">
+				<!-- single item -->
+				<% user.gallery.forEach(element => { %>
+				<div class="single-item">
+					<img src="./gallery/<%= element %> " alt="" />
+				</div>
+				<% }) %>
+
+				<!-- end single item -->
 			</div>
 		</div>
 	</div>

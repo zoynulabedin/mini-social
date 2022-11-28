@@ -1,0 +1,37 @@
+<div class="profile-body">
+	<div class="profile-wraper">
+		<div class="profile-info">
+			<div class="user info"><%- include ("layouts/profile.ejs") %></div>
+			<hr />
+			<div class="user-menu"><%- include ("layouts/menu.ejs") %></div>
+		</div>
+		<div class="profile-box">
+			<div
+				class="profile-details"
+				style="background-image: url(./cover/<%= user.bgPhoto %>)"
+			>
+				<div class="profile-img">
+					<img src="./images/<%= user.photo %>" alt="" />
+					<div class="profile-info-text">
+						<h3><%= user.name %></h3>
+						<h4>@<%= user.username %></h4>
+						<a href="">2k Followers</a>
+						<a href="">1k Following</a>
+					</div>
+				</div>
+			</div>
+
+			<h2>Gallery</h2>
+			<div class="gall-wrapper">
+				<!-- single item -->
+				<% user.gallery.forEach(element => { %>
+				<div class="single-item">
+					<img src="./gallery/<%= element %> " alt="" />
+				</div>
+				<% }) %>
+
+				<!-- end single item -->
+			</div>
+		</div>
+	</div>
+</div>
