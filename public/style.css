@@ -336,10 +336,10 @@ input#gallery {
 	border: 2px solid #dc4e41;
 }
 .profile-photo.profile-cover img {
-    width: 100% !IMPORTANT;
-    height: 250px;
-    border-radius: 0px;
-    object-fit: cover;
+	width: 100% !important;
+	height: 250px;
+	border-radius: 0px;
+	object-fit: cover;
 }
 .profile-info-text h3 {
 	color: #dc4e41;
@@ -389,7 +389,18 @@ img#proff {
 	color: #fff;
 }
 .friend-item img {
-    width: 130px;
-    height: 150px;
-    object-fit: cover;
+	width: 130px;
+	height: 150px;
+	object-fit: cover;
+}
+.profile-details {
+	background-size: 100% 100%;
+}
+a.unfollow {
+	text-decoration: none;
+	color: #dc4e41;
+}
+
+.auth-body.reset-pass .auth-wraper {
+	height: 323px;
 }

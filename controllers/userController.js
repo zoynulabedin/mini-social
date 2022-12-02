@@ -56,7 +56,10 @@ const changePasswordController = (req, res) => {
 
 const findFriendsController = async (req, res) => {
 	try {
-		const users = await userSchema.find();
+		const users = await userSchema
+			.find()
+			.where("email")
+			.ne(req.session.user.email);
 		res.render("friends", {
 			users,
 		});
@@ -70,9 +73,10 @@ const findFriendsController = async (req, res) => {
  */
 const singlefriendController = async (req, res) => {
 	try {
-		const user = await userSchema.findOne({ username: req.params.username });
+		const profile = await userSchema.findOne({ username: req.params.username });
+
 		res.render("single-profile", {
-			user,
+			profile: profile,
 		});
 	} catch (error) {
 		validateMessage(req, res, error.message, "/find-friends");
@@ -363,6 +367,58 @@ const editProfileControllerPost = async (req, res) => {
 	}
 };
 
+/**
+ * @get follow user controller
+ */
+
+const followUserController = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const following = await userSchema.findByIdAndUpdate(req.session.user._id, {
+			$push: {
+				following: id,
+			},
+		});
+		req.session.user.following.push(id);
+		validateMessage(req, res, "Followed successfully", "/find-friends");
+	} catch (error) {
+		validateMessage(req, res, error.message, "/find-friends");
+	}
+};
+
+/**
+ * @get unfollow user controller
+ */
+
+const unfollowUserController = async (req, res) => {
+	try {
+		const { id } = req.params;
+		const unfollow = await userSchema.findByIdAndUpdate(req.session.user._id, {
+			$pull: {
+				following: id,
+			},
+		});
+		let updateList = req.session.user.following.filter((item) => item != id);
+		req.session.user.following = updateList;
+		validateMessage(req, res, "Unfollowed successfully", "/find-friends");
+	} catch (error) {
+		validateMessage(req, res, error.message, "/find-friends");
+	}
+}
+
+/**
+ * password reset controller
+ */
+
+const passwordResetController = async (req, res) => {
+	res.render("password-reset");
+}
+
+/**
+ * password reset controller post
+ */
+const passwordResetControllerPost = async (req, res) => {}
+
 export {
 	loginController,
 	registerController,
@@ -383,4 +439,8 @@ export {
 	editProfileController,
 	editProfileControllerPost,
 	singlefriendController,
+	followUserController,
+	unfollowUserController,
+	passwordResetController,
+	passwordResetControllerPost,
 };

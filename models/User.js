@@ -21,11 +21,11 @@ const UserSchema = new mongoose.Schema({
 	},
 	photo: {
 		type: String,
-		default: "default.png",
+		default: "profile.png",
 	},
 	bgPhoto: {
 		type: String,
-		default: "bgPhoto.png",
+		default: "cover.png",
 	},
 	gallery: {
 		type: Array,
@@ -33,7 +33,6 @@ const UserSchema = new mongoose.Schema({
 	followers: {
 		type: [mongoose.Schema.Types.ObjectId],
 		ref: "User",
-        
 	},
 	following: {
 		type: [mongoose.Schema.Types.ObjectId],

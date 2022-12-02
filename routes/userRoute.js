@@ -4,12 +4,15 @@ import {
 	editProfileController,
 	editProfileControllerPost,
 	findFriendsController,
+	followUserController,
 	galleryController,
 	galleryControllerPost,
 	loggoutController,
 	loginController,
 	loginControllerauth,
 	passwordChangController,
+	passwordResetController,
+	passwordResetControllerPost,
 	profileBgPhotoUploadController,
 	profileBgPhotoUploadControllerPost,
 	profileController,
@@ -18,6 +21,7 @@ import {
 	registerController,
 	registerControllerPost,
 	singlefriendController,
+	unfollowUserController,
 	userAccountactivation,
 } from "../controllers/userController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
@@ -53,12 +57,17 @@ router
 	.get(authRedirect, changePasswordController)
 	.post(passwordChangController);
 router.route("/find-friends").get(authRedirect, findFriendsController);
-
+router
+	.route("/password-reset")
+	.get(passwordResetController)
+	.post(passwordResetControllerPost);
 router
 	.route("/gall")
 	.get(authRedirect, galleryController)
 	.post(gallery, galleryControllerPost);
 router.route("/activate/:token").get(userAccountactivation);
 router.route("/:username").get(singlefriendController);
+router.route("/follow/:id").get(authRedirect, followUserController);
+router.route("/unfollow/:id").get(authRedirect, unfollowUserController);
 
 export default router;

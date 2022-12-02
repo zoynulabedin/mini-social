@@ -8,6 +8,9 @@
 		<div class="profile-box">
 			<div class="box-content">
 				<h2>Friends List</h2>
+				<% if (message) { %>
+				<p><%= message %></p>
+				<% } %>
 				<div class="friends-wrapper">
 					<!-- single item -->
 					<% users.forEach(element => { %>
@@ -17,7 +20,12 @@
 						/></a>
 						<div class="friend-info">
 							<h3><%= element.name %></h3>
-							<a class="follow" href="">Follow</a>
+							<% let follow = user.following.some(data=> data == element.id) %>
+							<% if (follow) { %>
+							<a class="unfollow" href="/unfollow/<%= element.id %>">Unfollow</a>
+							<% }else{ %>
+							<a class="follow" href="/follow/<%= element.id %>">Follow</a>
+							<% } %>
 						</div>
 					</div>
 					<% }) %>
